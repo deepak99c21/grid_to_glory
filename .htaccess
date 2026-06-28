@@ -1,0 +1,8 @@
+# Grid to Glory PHP/MySQL version
+Options -Indexes
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|css|js)$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>

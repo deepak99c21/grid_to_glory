@@ -1,0 +1,357 @@
+/* ==========================================================
+   GRID TO GLORY - MANUAL ALIGNMENT OVERRIDES (V20 OVERHAULED)
+   ----------------------------------------------------------
+   Edit this file for specific position / alignment tweaks.
+   ========================================================== */
+
+:root {
+  /* ---------- Public page button placement/size ---------- */
+  --public-btn-top: 18px;
+  --public-btn-right: 5vw;
+  --public-btn-height: 42px;
+  --public-btn-padding-x: 18px;
+  --public-btn-font-size: 13px;
+
+  /* ---------- Meet The Teams heading / strip ---------- */
+  --teams-title-width: 90vw;
+  --teams-title-top: 30px;
+  --teams-strip-width: 90vw;
+  --teams-strip-top-gap: 18px;
+  --teams-strip-bottom-gap: 28px;
+  --teams-strip-height: 44px;
+  --teams-strip-x: 0px;
+
+  /* ---------- Meet The Teams grid / cards ---------- */
+  --teams-grid-width: 90vw;
+  --team-card-height: 170px;
+  --team-left-width: 42%;
+  --team-right-width: 58%;
+  --team-card-gap-row: 30px;
+  --team-card-gap-column: 30px;
+
+  /* ---------- Team card text ---------- */
+  --team-name-left: 24px;
+  --team-name-top: 22px;
+  --team-name-size: 26px;
+  --team-name-line-height: 1.05;
+  --team-sub-left: 24px;
+  --team-sub-top: 86px;
+  --team-sub-size: 16px;
+
+  /* ---------- Team score pill alignment ---------- */
+  --team-score-left: 24px;
+  --team-score-top: 110px;
+  --team-score-width: 62px;
+  --team-score-height: 34px;
+  --team-score-font-size: 18px;
+  --team-score-bg: rgba(7, 5, 15, 0.85);
+
+  /* ---------- Team image/right visual panel ---------- */
+  --team-image-fit: cover;
+  --team-image-position: center top;
+  --team-visual-padding: 0px;
+
+  /* ---------- Leaderboard date strip ---------- */
+  --leader-strip-width: 90vw;
+  --leader-strip-x: 0px;
+}
+
+/* Apply button positions across all public sub-pages */
+.teams-page .back-row,
+.leaderboard-page .back-row,
+.result-page .back-row {
+  position: fixed !important;
+  top: var(--public-btn-top) !important;
+  right: var(--public-btn-right) !important;
+  left: auto !important;
+  z-index: 150 !important;
+  margin: 0 !important;
+  display: flex !important;
+  gap: 10px !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+}
+
+.teams-page .btn,
+.leaderboard-page .btn,
+.result-page .btn {
+  min-height: var(--public-btn-height) !important;
+  padding: 0 var(--public-btn-padding-x) !important;
+  font-size: var(--public-btn-font-size) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Meet the Teams Specific Overrides */
+.teams-page .shell {
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.teams-page .page-title {
+  width: var(--teams-title-width) !important;
+  margin: var(--teams-title-top) auto 0 !important;
+}
+
+.teams-page .race-strip {
+  width: var(--teams-strip-width) !important;
+  max-width: var(--teams-strip-width) !important;
+  height: var(--teams-strip-height) !important;
+  margin: var(--teams-strip-top-gap) auto var(--teams-strip-bottom-gap) !important;
+  transform: translateX(var(--teams-strip-x)) !important;
+}
+
+.teams-page .teams-grid {
+  width: var(--teams-grid-width) !important;
+  max-width: var(--teams-grid-width) !important;
+  margin: 0 auto !important;
+  grid-template-columns: repeat(2, minmax(320px, 1fr)) !important;
+  gap: var(--team-card-gap-row) var(--team-card-gap-column) !important;
+}
+
+/* Team Card Details Overrides */
+.teams-page .team-card {
+  height: var(--team-card-height) !important;
+  grid-template-columns: var(--team-left-width) var(--team-right-width) !important;
+}
+
+.teams-page .team-card .band {
+  width: var(--team-left-width) !important;
+}
+
+.teams-page .team-card .visual-panel {
+  width: var(--team-right-width) !important;
+  padding: var(--team-visual-padding) !important;
+}
+
+.teams-page .team-card .visual-panel img {
+  object-fit: var(--team-image-fit) !important;
+  object-position: var(--team-image-position) !important;
+}
+
+.teams-page .team-card h2 {
+  left: var(--team-name-left) !important;
+  top: var(--team-name-top) !important;
+  font-size: var(--team-name-size) !important;
+  line-height: var(--team-name-line-height) !important;
+}
+
+.teams-page .team-card p {
+  left: var(--team-sub-left) !important;
+  top: var(--team-sub-top) !important;
+  font-size: var(--team-sub-size) !important;
+}
+
+.teams-page .team-card .score-pill {
+  left: var(--team-score-left) !important;
+  top: var(--team-score-top) !important;
+  width: var(--team-score-width) !important;
+  min-width: var(--team-score-width) !important;
+  height: var(--team-score-height) !important;
+  font-size: var(--team-score-font-size) !important;
+  background: var(--team-score-bg) !important;
+  border-color: var(--teamColor) !important;
+}
+
+/* Leaderboard Page strip positioning */
+.leaderboard-page .race-strip {
+  width: var(--leader-strip-width) !important;
+  max-width: var(--leader-strip-width) !important;
+  transform: translateX(var(--leader-strip-x)) !important;
+}
+
+/* Mobile Responsiveness Rules */
+@media (max-width: 1024px) {
+  .teams-page .teams-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .teams-page .back-row,
+  .leaderboard-page .back-row,
+  .result-page .back-row {
+    left: 20px !important;
+    right: auto !important;
+    top: 16px !important;
+  }
+  .teams-page .shell {
+    padding-top: 80px !important;
+  }
+}
+
+/* ==========================================================
+   V21 ADMIN UNIVERSAL DESIGN LAYOUT FIX
+   ----------------------------------------------------------
+   Goal:
+   1) Keep Admin Login visually centered.
+   2) Use available screen width after login.
+   3) Reduce unnecessary left/right empty space inside admin panels.
+   4) Keep layout responsive on laptop, desktop and mobile.
+   ========================================================== */
+
+body.admin-page {
+  min-height: 100vh !important;
+}
+
+body.admin-page .admin-shell {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  padding: clamp(18px, 2.2vw, 34px) clamp(18px, 3vw, 46px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+body.admin-page .topbar {
+  width: 100% !important;
+  max-width: 1680px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+}
+
+body.admin-page.admin-logged-out .topbar {
+  max-width: 560px !important;
+}
+
+body.admin-page.admin-logged-out .admin-shell {
+  justify-content: flex-start !important;
+}
+
+body.admin-page.admin-logged-out #msg {
+  width: min(100%, 520px) !important;
+  margin: 18px auto 0 !important;
+}
+
+body.admin-page.admin-logged-out .admin-login-card {
+  width: min(100%, 520px) !important;
+  max-width: 520px !important;
+  margin: auto !important;
+  padding: clamp(28px, 4vw, 44px) !important;
+  align-self: center !important;
+  transform: translateY(-4vh) !important;
+}
+
+body.admin-page.admin-logged-out .admin-login-card .field,
+body.admin-page.admin-logged-out .admin-login-card input,
+body.admin-page.admin-logged-out .admin-login-card button {
+  width: 100% !important;
+}
+
+body.admin-page.admin-logged-in #msg {
+  width: min(100%, 1680px) !important;
+  margin: 18px auto 0 !important;
+}
+
+body.admin-page.admin-logged-in .admin-layout {
+  width: 100% !important;
+  max-width: 1680px !important;
+  margin: 24px auto 0 !important;
+  grid-template-columns: 260px minmax(0, 1fr) !important;
+  gap: clamp(18px, 2vw, 28px) !important;
+  align-items: start !important;
+}
+
+body.admin-page.admin-logged-in .admin-sidebar {
+  padding: 18px !important;
+}
+
+body.admin-page.admin-logged-in .admin-main {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+body.admin-page.admin-logged-in .admin-main .panel.tab {
+  width: 100% !important;
+  max-width: none !important;
+  padding: clamp(22px, 2.4vw, 34px) !important;
+}
+
+body.admin-page.admin-logged-in .form-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+  gap: 16px 20px !important;
+}
+
+body.admin-page.admin-logged-in .list-item,
+body.admin-page.admin-logged-in #adminResultTable,
+body.admin-page.admin-logged-in #categoryReferenceRows,
+body.admin-page.admin-logged-in table {
+  max-width: 100% !important;
+}
+
+body.admin-page.admin-logged-in #adminResultTable {
+  overflow-x: auto !important;
+}
+
+body.admin-page.admin-logged-in table {
+  width: 100% !important;
+}
+
+@media (max-width: 1100px) {
+  body.admin-page.admin-logged-in .admin-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.admin-page.admin-logged-in .admin-sidebar {
+    position: relative !important;
+    top: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  body.admin-page.admin-logged-in .admin-sidebar .navbtn {
+    margin-bottom: 0 !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 640px) {
+  body.admin-page .topbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  body.admin-page .topbar .row {
+    justify-content: stretch !important;
+  }
+
+  body.admin-page .topbar .row .btn {
+    flex: 1 1 auto !important;
+  }
+
+  body.admin-page.admin-logged-out .admin-login-card {
+    transform: none !important;
+    margin: 34px auto 0 !important;
+  }
+}
+
+
+/* V23 fix: keep Home button in the same header position before and after login */
+body.admin-page.admin-logged-out .topbar {
+  max-width: 1680px !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: start !important;
+}
+
+body.admin-page.admin-logged-out .topbar .brand {
+  grid-column: 2 !important;
+  justify-self: center !important;
+}
+
+body.admin-page.admin-logged-out .topbar .row {
+  grid-column: 3 !important;
+  justify-self: end !important;
+}
+
+body.admin-page.admin-logged-out #adminLogoutBtn.hidden {
+  display: inline-flex !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="styles.css?v=25" rel="stylesheet" />
+    <link href="custom-alignment.css?v=25" rel="stylesheet" />
+</head>
+
+<body class="admin-page">
+    <div class="shell admin-shell">
+        <div class="topbar">
+            <div class="brand">
+                <h1 class="admin-title">ADMIN PANEL</h1>
+            </div>
+            <div class="row"><a class="btn admin-home-control" href="index.html">Home</a><button
+                    class="btn danger admin-logout-control" id="adminLogoutBtn" type="button"
+                    onclick="adminLogout(event)">Logout</button></div>
+        </div>
+        <div class="message hidden" id="msg"></div>
+        <div class="panel admin-login-card" id="loginPanel">
+            <h2>Admin Login</h2>
+            <div class="field"><label>Admin Key</label><input id="adminKey" placeholder="Enter admin key"
+                    type="password" /></div><br /><button class="btn primary" onclick="login()">Open Admin
+                Panel</button>
+        </div>
+        <div class="admin-layout hidden" id="adminPanel">
+            <aside class="panel side admin-sidebar"><button class="btn navbtn" data-tab="lookTab"
+                    onclick="showTab('lookTab')">Page Text</button><button class="btn navbtn" data-tab="designTab"
+                    onclick="showTab('designTab')">Design Settings</button><button class="btn navbtn"
+                    data-tab="quartersTab" onclick="showTab('quartersTab')">Quarters</button><button class="btn navbtn"
+                    data-tab="teamsTab" onclick="showTab('teamsTab')">Team Leaders</button><button class="btn navbtn"
+                    data-tab="membersTab" onclick="showTab('membersTab')">Team Members</button><button
+                    class="btn navbtn" data-tab="resultsTab" onclick="showTab('resultsTab')">Result
+                    Entry</button><button class="btn navbtn" data-tab="exportTab"
+                    onclick="showTab('exportTab');loadAdminResults()">CSV / Screenshot</button><button
+                    class="btn navbtn" data-tab="backupTab" onclick="showTab('backupTab');loadSystemInfo()">Backup /
+                    Maintenance</button><button class="btn navbtn" data-tab="settingsTab"
+                    onclick="showTab('settingsTab')">Admin Key</button></aside>
+            <main class="admin-main">
+                <section class="panel tab" id="lookTab">
+                    <h2>Page Text</h2>
+                    <form id="lookForm" onsubmit="saveLook(event)">
+                        <div class="form-grid">
+                            <div class="field"><label>Leaderboard Date</label><input name="leaderboard_date"
+                                    placeholder="AS OF JUNE 26" /></div>
+                            <div class="field"><label>Team Page Strip Text</label><input name="team_page_subtitle"
+                                    placeholder="CHOOSE A NAME FOR YOUR TEAM..." /></div>
+                        </div><br /><button class="btn primary">Save Page Text</button>
+                        <p class="muted">Home page artwork is now fixed/static. Quarter names, lock/unlock and team data
+                            remain editable from their own sections.</p>
+                    </form>
+                </section>
+                <section class="panel tab hidden" id="designTab">
+                    <h2>Design Settings</h2>
+                    <form id="designForm" onsubmit="saveDesign(event)">
+                        <h3>Button Style</h3>
+                        <div class="form-grid">
+                            <div class="field"><label>Button Gradient Start</label><input name="button_gradient_start"
+                                    type="color" /></div>
+                            <div class="field"><label>Button Gradient End</label><input name="button_gradient_end"
+                                    type="color" /></div>
+                            <div class="field"><label>Button Opacity</label><input max="1" min="0.1"
+                                    name="button_opacity" step="0.05" type="number" /></div>
+                            <div class="field"><label>Button Radius (px)</label><input max="40" min="0"
+                                    name="button_radius" step="1" type="number" /></div>
+                        </div>
+                        <h3>Leaderboard Style</h3>
+                        <div class="form-grid">
+                            <div class="field"><label>Leaderboard Gradient Start</label><input
+                                    name="leader_gradient_start" type="color" /></div>
+                            <div class="field"><label>Leaderboard Gradient End</label><input name="leader_gradient_end"
+                                    type="color" /></div>
+                            <div class="field"><label>Row Band Opacity</label><input max="1" min="0"
+                                    name="leader_row_opacity" step="0.05" type="number" /></div>
+                            <div class="field"><label>Table Width / Scale (%)</label><input max="160" min="80"
+                                    name="leader_table_scale" step="5" type="number" /></div>
+                        </div>
+                        <h3>Home Quarter Cards</h3>
+                        <div class="form-grid">
+                            <div class="field"><label>Card Width (px)</label><input max="320" min="80"
+                                    name="quarter_card_width" step="1" type="number" /></div>
+                            <div class="field"><label>Card Height (px)</label><input max="260" min="70"
+                                    name="quarter_card_height" step="1" type="number" /></div>
+                            <div class="field"><label>Card Opacity</label><input max="1" min="0.1"
+                                    name="quarter_card_opacity" step="0.05" type="number" /></div>
+                        </div>
+                        <h3>Quarter Position (% from left / top)</h3>
+                        <div class="form-grid">
+                            <div class="field"><label>Q1 X</label><input name="q1_x" step="0.1" type="number" /></div>
+                            <div class="field"><label>Q1 Y</label><input name="q1_y" step="0.1" type="number" /></div>
+                            <div class="field"><label>Q2 X</label><input name="q2_x" step="0.1" type="number" /></div>
+                            <div class="field"><label>Q2 Y</label><input name="q2_y" step="0.1" type="number" /></div>
+                            <div class="field"><label>Q3 X</label><input name="q3_x" step="0.1" type="number" /></div>
+                            <div class="field"><label>Q3 Y</label><input name="q3_y" step="0.1" type="number" /></div>
+                            <div class="field"><label>Q4 X</label><input name="q4_x" step="0.1" type="number" /></div>
+                            <div class="field"><label>Q4 Y</label><input name="q4_y" step="0.1" type="number" /></div>
+                        </div><br />
+                        <h3>Admin Button on Home Page</h3>
+                        <div class="form-grid">
+                            <div class="field"><label>Background Color</label><input name="admin_button_bg"
+                                    type="color" /></div>
+                            <div class="field"><label>Text Color</label><input name="admin_button_text" type="color" />
+                            </div>
+                            <div class="field"><label>Top Position (px)</label><input name="admin_button_top" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Right Position (px)</label><input name="admin_button_right"
+                                    step="1" type="number" /></div>
+                            <div class="field"><label>Width (px)</label><input name="admin_button_width" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Height (px)</label><input name="admin_button_height" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Font Size (px)</label><input name="admin_button_font_size"
+                                    step="1" type="number" /></div>
+                        </div>
+                        <h3>Home Button in Admin Header</h3>
+                        <div class="form-grid">
+                            <div class="field"><label>Background Color</label><input name="home_button_bg"
+                                    type="color" /></div>
+                            <div class="field"><label>Text Color</label><input name="home_button_text" type="color" />
+                            </div>
+                            <div class="field"><label>Move X (px)</label><input name="home_button_x" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Move Y (px)</label><input name="home_button_y" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Width (px)</label><input name="home_button_width" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Height (px)</label><input name="home_button_height" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Font Size (px)</label><input name="home_button_font_size" step="1"
+                                    type="number" /></div>
+                        </div>
+                        <h3>Logout Button in Admin Header</h3>
+                        <div class="form-grid">
+                            <div class="field"><label>Background Color</label><input name="logout_button_bg"
+                                    type="color" /></div>
+                            <div class="field"><label>Text Color</label><input name="logout_button_text" type="color" />
+                            </div>
+                            <div class="field"><label>Move X (px)</label><input name="logout_button_x" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Move Y (px)</label><input name="logout_button_y" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Width (px)</label><input name="logout_button_width" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Height (px)</label><input name="logout_button_height" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Font Size (px)</label><input name="logout_button_font_size"
+                                    step="1" type="number" /></div>
+                        </div>
+                        <h3>Back Button on Public Pages</h3>
+                        <div class="form-grid">
+                            <div class="field"><label>Background Color</label><input name="back_button_bg"
+                                    type="color" /></div>
+                            <div class="field"><label>Text Color</label><input name="back_button_text" type="color" />
+                            </div>
+                            <div class="field"><label>Top Position (px)</label><input name="back_button_top" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Right Position (% viewport)</label><input name="back_button_right"
+                                    step="0.1" type="number" /></div>
+                            <div class="field"><label>Width (px)</label><input name="back_button_width" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Height (px)</label><input name="back_button_height" step="1"
+                                    type="number" /></div>
+                            <div class="field"><label>Font Size (px)</label><input name="back_button_font_size" step="1"
+                                    type="number" /></div>
+                        </div><button class="btn primary">Save Design Settings</button><button class="btn"
+                            onclick="resetDesignDefaults()" type="button">Fill Default Values</button>
+                        <p class="muted">Use these settings to align Q1/Q2/Q3/Q4 with the final home page artwork and
+                            soften the leaderboard/table style.</p>
+                    </form>
+                </section>
+                <section class="panel tab hidden" id="quartersTab">
+                    <h2>Quarters</h2>
+                    <div id="quarterAdmin"></div>
+                </section>
+                <section class="panel tab hidden" id="teamsTab">
+                    <h2>Team Leaders</h2>
+                    <h3 id="teamFormTitle">Add Team Leader</h3>
+                    <form enctype="multipart/form-data" id="teamForm" onsubmit="saveTeam(event)"><input name="team_id"
+                            type="hidden" />
+                        <div class="form-grid">
+                            <div class="field"><label>Team Name</label><input name="name" placeholder="TEAM RAJESH"
+                                    required="" /></div>
+                            <div class="field"><label>Leader Name</label><input name="leader_name" placeholder="Rajesh"
+                                    required="" /></div>
+                            <div class="field"><label>Leaderboard Short Name</label><input name="leaderboard_name"
+                                    placeholder="Rajesh" /></div>
+                            <div class="field"><label>Second Line / Subtitle</label><input name="subtitle"
+                                    placeholder="Mercedes" /></div>
+                            <div class="field"><label>Card Color</label><input name="card_color" type="color"
+                                    value="#00b8b0" /></div>
+                            <div class="field"><label>Sort Order</label><input name="sort_order" type="number"
+                                    value="1" /></div>
+                            <div class="field"><label>Leader Cutout / Rectangular Image</label><input
+                                    accept=".png,.jpg,.jpeg,.webp" name="leaderImage" type="file" /><small class="muted"
+                                    id="teamImageNote">Add your full right-side card image / cutout here. Team icon can
+                                    be included inside this image.</small></div>
+                        </div><br /><button class="btn primary" id="teamSaveBtn">Add Team Leader</button> <button
+                            class="btn hidden" id="teamCancelBtn" onclick="resetTeamForm()" type="button">Cancel
+                            Edit</button>
+                    </form>
+                    <h3>Existing Teams</h3>
+                    <div id="teamList"></div>
+                </section>
+                <section class="panel tab hidden" id="membersTab">
+                    <h2>Team Members</h2>
+                    <h3 id="memberFormTitle">Add Team Member</h3>
+                    <form id="memberForm" onsubmit="saveMember(event)"><input name="member_id" type="hidden" />
+                        <div class="form-grid">
+                            <div class="field"><label>Team</label><select id="memberTeam" name="team_id"></select></div>
+                            <div class="field"><label>Member Name</label><input name="name" required="" /></div>
+                            <div class="field"><label>Role</label><input name="role" value="Sales Lead" /></div>
+                        </div><br /><button class="btn primary" id="memberSaveBtn">Add Member</button> <button
+                            class="btn hidden" id="memberCancelBtn" onclick="resetMemberForm()" type="button">Cancel
+                            Edit</button>
+                    </form>
+                    <h3>Existing Members</h3>
+                    <div id="memberList"></div>
+                </section>
+                <section class="panel tab hidden" id="resultsTab">
+                    <h2>Result Entry</h2>
+                    <form onsubmit="saveResult(event)">
+                        <div class="form-grid">
+                            <div class="field"><label>Quarter</label><select id="resultQuarter"
+                                    name="quarter_id"></select></div>
+                            <div class="field"><label>Team</label><select id="resultTeam"
+                                    onchange="fillMemberSelect()"></select></div>
+                            <div class="field"><label>Member</label><select id="resultMember" name="member_id"></select>
+                            </div>
+                            <div class="field"><label>Category</label><input id="resultCategory" list="categoryList"
+                                    name="category" onchange="applyCategoryDefault()" oninput="applyCategoryDefault()"
+                                    required="" /><datalist id="categoryList">
+                                    <option value="Press Release with Clients">
+                                    <option value="Client testimonial / case study">
+                                    <option
+                                        value="Quarterly results quote or Feature Note with client or Strategic Partner">
+                                    <option value="Client Speaker at Events">
+                                    <option value="Thought Leadership with Clients">
+                                    <option value="Client Attendee/meeting at Events">
+                                    <option value="Analyst or deal advisor references by clients">
+                                    <option value="MSA clause for Marketing">
+                                    <option value="MSD opportunity Tagging">
+                                    <option value="Social Media Tagging Clients &amp; Endorsing Infosys">
+                                    <option value="Insurance Advisory Council-Membership">
+                                    <option value="Social Media Tagging Strategic Partners &amp; Endorsing Infosys">
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                </datalist><small class="muted" id="categoryHelp">Select a category. Points can still be
+                                    edited manually.</small></div>
+                            <div class="field"><label>Points</label><input id="resultPoints" list="pointsList"
+                                    name="points" required="" step="0.01" type="number" /><datalist id="pointsList">
+                                    <option value="2">
+                                    <option value="5">
+                                    <option value="10">
+                                    <option value="20">
+                                    <option value="30">
+                                    <option value="50">
+                                    <option value="80">
+                                    <option value="100"></option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                    </option>
+                                </datalist></div>
+                            <div class="field"><label>Quantity</label><input name="quantity" required="" step="0.01"
+                                    type="number" value="1" /></div>
+                            <div class="field"><label>Bonus</label><input name="bonus" step="0.01" type="number"
+                                    value="0" /></div>
+                        </div>
+                        <div class="formula-box">Total = (Points × Quantity) + Bonus</div><button
+                            class="btn primary">Save Result</button>
+                    </form>
+                    <div class="category-reference">
+                        <h3>Category Reference</h3>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Points</th>
+                                        <th>Details</th>
+                                        <th>Bonus Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="categoryReferenceRows"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="panel tab hidden" id="exportTab">
+                    <h2>CSV / Screenshot</h2>
+                    <div class="row"><button class="btn primary" onclick="downloadAdminCsv()">Download
+                            CSV</button><button class="btn"
+                            onclick="downloadScreenshot('#adminResultCapture','admin-result-screenshot.png')">Screenshot
+                            Result</button><button class="btn" onclick="loadAdminResults()">Refresh</button></div>
+                    <div class="capture-box" id="adminResultCapture">
+                        <h3>All Quarter Results</h3>
+                        <div class="table-wrap" id="adminResultTable"></div>
+                    </div>
+                </section>
+                <section class="panel tab hidden" id="backupTab">
+                    <h2>Backup / Maintenance</h2>
+                    <p class="muted">Use these buttons before making major data or design changes, and before moving the
+                        app to another server.</p>
+                    <div class="row">
+                        <button class="btn primary" onclick="downloadDatabaseBackup()">Download Database Backup</button>
+                        <button class="btn" onclick="downloadFullBackupZip()">Download Full Backup ZIP</button>
+                        <button class="btn" onclick="loadSystemInfo()">Refresh System Info</button>
+                    </div>
+                    <div class="message" id="systemInfo">System information will appear here.</div>
+                    <div class="list-item"><b>Full Backup ZIP includes:</b>
+                        <div class="muted">SQLite database, uploaded images and public/custom-alignment.css.</div>
+                    </div>
+                </section>
+                <section class="panel tab hidden" id="settingsTab">
+                    <h2>Change Admin Key</h2>
+                    <form onsubmit="changeKey(event)">
+                        <div class="form-grid">
+                            <div class="field"><label>New Admin Key</label><input id="newKey" minlength="6" required=""
+                                    type="password" /></div>
+                            <div class="field"><label>Confirm New Key</label><input id="confirmKey" minlength="6"
+                                    required="" type="password" /></div>
+                        </div><br /><button class="btn primary">Change Key</button>
+                    </form>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script src="admin.js?v=25"></script>
+</body>
+
+</html>

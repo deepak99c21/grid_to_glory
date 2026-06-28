@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Leaderboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=25">
+    <link rel="stylesheet" href="custom-alignment.css?v=25">
+</head>
+
+<body class="leaderboard-page">
+    <div class="shell">
+        <div class="back-row"><a id="backTeams" class="btn" href="index.html">Back</a><button class="btn primary"
+                onclick="downloadScreenshot('#leaderboardCapture','leaderboard.png')">Screenshot</button></div>
+        <section id="leaderboardCapture">
+            <h1 class="page-title">GRID TO GLORY<span class="bold">LEADERBOARD</span></h1>
+            <div id="leaderDate" class="race-strip">AS OF JUNE 26</div>
+            <div id="leaderboardTable" class="leaderboard-card"></div>
+        </section>
+    </div>
+    <script src="app.js?v=25"></script>
+</body>
+
+</html>
